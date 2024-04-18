@@ -6,6 +6,7 @@ window.addEventListener('load', onload);
 
 function onload(event) {
     initWebSocket();
+    initButton();
 }
 
 function getReadings(){
@@ -40,5 +41,23 @@ function onMessage(event) {
     for (var i = 0; i < keys.length; i++){
         var key = keys[i];
         document.getElementById(key).innerHTML = myObj[key];
+        if (key == "state"){
+            if (myObj[key] == "1")
+            {
+                state = "ON";
+            }
+            else{
+                state = "OFF";
+            }
+        }   
+        document.getElementById('state').innerHTML = state;
     }
+}
+
+function initButton() {
+    document.getElementById('button').addEventListener('click', toggle);
+}
+
+function toggle(){
+    websocket.send('toggle');
 }
