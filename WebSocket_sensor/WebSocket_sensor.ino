@@ -97,7 +97,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo *)arg;
   size_t dataSize = sizeof(data);
   const char *toggleString = "toggle";
-  Serial.println(findToggle(data, dataSize, toggleString));
   if (info->final && info->index == 0 && info->len == len &&
       info->opcode == WS_TEXT) {
     // data[len] = 0;
@@ -106,8 +105,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     if (findToggle(data, dataSize, toggleString)) {
       ledState = !ledState;
       digitalWrite(D4, ledState);
-      String sensorReadings = getSensorReadings();
-      notifyClients(sensorReadings);
+      // String sensorReadings = getSensorReadings();
+      // notifyClients(sensorReadings);
       Serial.println("toggle");
     }
     if (strcmp((char *)data, "getReadings") == 0) {
