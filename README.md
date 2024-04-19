@@ -15,7 +15,7 @@ This repository contains code for programming a NodeMCU to read data from an SHT
 
 For more detailed information and tutorials, refer to the following resources:
 
-- [YouTube Tutorial on Filesystem Uploader in Arduino](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide/): Learn how to use the Filesystem Uploader in Arduino IDE to upload files to the SPIFFS file system on ESP8266-based boards like NodeMCU.
+- [Tutorial on Filesystem Uploader in Arduino](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide/): Learn how to use the Filesystem Uploader in Arduino IDE to upload files to the SPIFFS file system on ESP8266-based boards like NodeMCU.
 
 - [Tutorial on Making Charts using HTML, CSS, and JavaScript](https://randomnerdtutorials.com/esp32-esp8266-plot-chart-web-server/): This tutorial demonstrates how to create charts using HTML, CSS, and JavaScript for displaying sensor data on a web server hosted by an ESP32 or ESP8266 microcontroller.
 
