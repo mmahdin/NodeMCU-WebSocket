@@ -35,7 +35,7 @@ JSONVar readings;
 unsigned long lastTime = 0;
 unsigned long timerDelay = 1000;
 
-bool ledState = 1;
+bool ledState = 0;
 
 // Create a sensor object
 DFRobot_SHT20 sht20(&Wire, SHT20_I2C_ADDR);
@@ -105,6 +105,9 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     //  Check if the message is "getReadings"
     if (findToggle(data, dataSize, toggleString)) {
       ledState = !ledState;
+      digitalWrite(D4, ledState);
+      String sensorReadings = getSensorReadings();
+      notifyClients(sensorReadings);
       Serial.println("toggle");
     }
     if (strcmp((char *)data, "getReadings") == 0) {
@@ -142,7 +145,7 @@ void setup() {
   Serial.begin(115200);
   sht20.initSHT20();
   pinMode(D4, OUTPUT);
-  digitalWrite(D4, 1);
+  digitalWrite(D4, 0);
   initWiFi();
   initFS();
   initWebSocket();

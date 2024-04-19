@@ -40,17 +40,37 @@ function onMessage(event) {
 
     for (var i = 0; i < keys.length; i++){
         var key = keys[i];
+        
         document.getElementById(key).innerHTML = myObj[key];
         if (key == "state"){
             if (myObj[key] == "1")
             {
-                state = "ON";
-            }
-            else{
                 state = "OFF";
             }
+            else{
+                state = "ON";
+            }
+            document.getElementById('state').innerHTML = state;
         }   
-        document.getElementById('state').innerHTML = state;
+        else if (key == "temperature"){
+            var x = (new Date()).getTime();
+            var y = parseFloat(myObj[key]);
+            if (chartT.series[0].data.length > 40) {
+                chartT.series[0].addPoint([x, y], true, true, true);
+              } else {
+                chartT.series[0].addPoint([x, y], true, false, true);
+              }
+        }
+        else if (key == "humidity"){
+            var x = (new Date()).getTime();
+            var y = parseFloat(myObj[key]);
+            if (chartH.series[0].data.length > 40) {
+                chartH.series[0].addPoint([x, y], true, true, true);
+              } else {
+                chartH.series[0].addPoint([x, y], true, false, true);
+              }
+        }
+    
     }
 }
 

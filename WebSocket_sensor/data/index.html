@@ -4,6 +4,8 @@
 <head>
     <title>ESP IOT DASHBOARD</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -27,11 +29,63 @@
     </div>
     <div class="content">
         <div class="card">
-            <p class="state">state: <span id="state">%STATE%</span></p>
+            <p class="state">state: <span id="state">&state</span></p>
             <p><button id="button" class="button">Toggle</button></p>
         </div>
     </div>
+    <div id="chart-temperature" class="container"></div>
+    <div id="chart-humidity" class="container"></div>
+    <script>
+        var chartT = new Highcharts.Chart({
+    chart: { renderTo: 'chart-temperature', height: 300  },
+    title: { text: 'SHT20 Temperature' },
+    series: [{
+      showInLegend: false,
+      data: []
+    }],
+    plotOptions: {
+      line: {
+        animation: false,
+        dataLabels: { enabled: true }
+      },
+      series: { color: '#059e8a' }
+    },
+    xAxis: {
+      type: 'datetime',
+      dateTimeLabelFormats: { second: '%H:%M:%S' }
+    },
+    yAxis: {
+      title: { text: 'Temperature (Celsius)' }
+      //title: { text: 'Temperature (Fahrenheit)' }
+    },
+    credits: { enabled: false }
+  });
+
+  var chartH = new Highcharts.Chart({
+    chart: { renderTo: 'chart-humidity' },
+    title: { text: 'SHT20 Humidity' },
+    series: [{
+      showInLegend: false,
+      data: []
+    }],
+    plotOptions: {
+      line: {
+        animation: false,
+        dataLabels: { enabled: true }
+      }
+    },
+    xAxis: {
+      type: 'datetime',
+      dateTimeLabelFormats: { second: '%H:%M:%S' }
+    },
+    yAxis: {
+      title: { text: 'Humidity (%)' }
+    },
+    credits: { enabled: false }
+  });
+    </script>
     <script src="script.js"></script>
+
 </body>
 
 </html>
