@@ -42,12 +42,14 @@ DFRobot_SHT20 sht20(&Wire, SHT20_I2C_ADDR);
 
 // Get Sensor Readings and return JSON object
 String getSensorReadings() {
+  Serial.println("getSensorReadings S");
   float t = sht20.readTemperature();
   float h = sht20.readHumidity();
   readings["temperature"] = String(t);
   readings["humidity"] = String(h);
   readings["state"] = String(ledState);
   String jsonString = JSON.stringify(readings);
+  Serial.println("getSensorReadings E");
   return jsonString;
 }
 
@@ -76,7 +78,7 @@ void notifyClients(String sensorReadings) { ws.textAll(sensorReadings); }
 
 int findToggle(uint8_t *data, size_t dataSize, const char *toggleString) {
   size_t toggleLen = strlen(toggleString);
-
+  Serial.println("findToggle S");
   for (size_t i = 0; i < dataSize - toggleLen + 1; i++) {
     int match = 1;
     for (size_t j = 0; j < toggleLen; j++) {
@@ -86,16 +88,17 @@ int findToggle(uint8_t *data, size_t dataSize, const char *toggleString) {
       }
     }
     if (match) {
+      Serial.println("findToggle E");
       return 1;  // Found "toggle" in data
     }
   }
-
+  Serial.println("findToggle E");
   return 0;  // "toggle" not found in data
 }
 
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo *)arg;
-  size_t dataSize = sizeof(data);
+  size_t dataSize = len;
   const char *toggleString = "toggle";
   if (info->final && info->index == 0 && info->len == len &&
       info->opcode == WS_TEXT) {
