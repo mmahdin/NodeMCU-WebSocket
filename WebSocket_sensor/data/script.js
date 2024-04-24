@@ -52,7 +52,7 @@ function onMessage(event) {
             }
             document.getElementById('state').innerHTML = state;
         }   
-        else if (key == "temperature"){
+        else if (key == "temperature" && myObj[key] != "null"){
             var x = (new Date()).getTime();
             var y = parseFloat(myObj[key]);
             if (chartT.series[0].data.length > 40) {
@@ -61,7 +61,7 @@ function onMessage(event) {
                 chartT.series[0].addPoint([x, y], true, false, true);
               }
         }
-        else if (key == "humidity"){
+        else if (key == "humidity" && myObj[key] != "null"){
             var x = (new Date()).getTime();
             var y = parseFloat(myObj[key]);
             if (chartH.series[0].data.length > 40) {

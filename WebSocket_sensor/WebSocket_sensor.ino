@@ -76,6 +76,14 @@ void initWiFi() {
 
 void notifyClients(String sensorReadings) { ws.textAll(sensorReadings); }
 
+void notifyClients_led() {
+  readings["temperature"] = "null";
+  readings["humidity"] = "null";
+  readings["state"] = String(ledState);
+  String jsonString = JSON.stringify(readings);
+  ws.textAll(jsonString);
+}
+
 int findToggle(uint8_t *data, size_t dataSize, const char *toggleString) {
   size_t toggleLen = strlen(toggleString);
   Serial.println("findToggle S");
@@ -108,8 +116,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     if (findToggle(data, dataSize, toggleString)) {
       ledState = !ledState;
       digitalWrite(D4, ledState);
-      // String sensorReadings = getSensorReadings();
-      // notifyClients(sensorReadings);
+      notifyClients_led();
       Serial.println("toggle");
     }
     if (strcmp((char *)data, "getReadings") == 0) {
